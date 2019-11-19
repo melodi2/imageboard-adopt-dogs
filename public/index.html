@@ -3,16 +3,29 @@
 <head>
     <title>Imageboard</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/vue.js"></script>
 </head>
 <body>
     <h1>Imageboard</h1>
     <h2>Latest Images</h2>
     <div id="main">
-        <div class="cards" v-for="image in images"> <h4>{{image.title}}</h4>
-            <img :src="image.url" alt="" width="200" height="200"><p>{{image.description}}</p></div>
+        <form>
+            <input v-model="title" type="text" name="title" placeholder="title">
+            <input v-model="description" type="text" name="description" placeholder="description">
+            <input v-model='username' type="text" name="username" vplaceholder="username">
+            <input @change="handleChange" type="file" name="file" accept='image/*'>
+            <button @click.prevent.default="handleClick">SUBMIT</button>
+        </form>
+
+        <div class="container">
+            <div class="cards" v-for="image in images"> <h4>{{image.title}}</h4>
+                <img :src="image.url" alt="" width="200" height="200"><p>{{image.description}}</p>
+            </div>
+        </div>
+
     </div>
 
-    <script src="/js/vue.js"></script>
+
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
 </body>
