@@ -7,7 +7,8 @@ new Vue({
         title: "",
         description: "",
         username: "",
-        file: null
+        file: null,
+        currentId: null
     },
     mounted: function() {
         // console.log("my Vue component has mounted!");
@@ -27,7 +28,6 @@ new Vue({
     methods: {
         handleClick: function(e) {
             e.preventDefault();
-            console.log("this", this);
             var fd = new FormData();
             fd.append("file", this.file);
             fd.append("title", this.title);
@@ -45,9 +45,16 @@ new Vue({
                 });
         },
         handleChange: function(e) {
-            console.log("e.target.files[0]", e.target.files[0]);
-            console.log("handle change is happening");
+            // console.log("e.target.files[0]", e.target.files[0]);
+            // console.log("handle change is happening");
             this.file = e.target.files[0];
+        },
+        show: function(id) {
+            console.log("image id ", id);
+            this.currentId = id;
+        },
+        unsetCurrentImage: function() {
+            this.currentId = null;
         }
     }
 });

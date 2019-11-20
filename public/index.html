@@ -12,20 +12,46 @@
         <form>
             <input v-model="title" type="text" name="title" placeholder="title">
             <input v-model="description" type="text" name="description" placeholder="description">
-            <input v-model='username' type="text" name="username" vplaceholder="username">
+            <input v-model='username' type="text" name="username" placeholder="username">
             <input @change="handleChange" type="file" name="file" accept='image/*'>
             <button @click.prevent.default="handleClick">SUBMIT</button>
         </form>
 
-        <div class="container">
-            <div class="cards" v-for="image in images"> <h4>{{image.title}}</h4>
-                <img :src="image.url" alt="" width="200" height="200"><p>{{image.description}}</p>
+        <div class="container" @>
+            <div class="cards" v-for="image in images" @click="show(image.id)">
+            <h4>{{image.title}}</h4>
+            <img :src="image.url" alt="" width="200" height="200">
+            <p>{{image.description}}</p>
             </div>
         </div>
 
+
+        <image-modal  v-if="currentId" :id="currentId" @close="unsetCurrentImage"></image-modal>
+
     </div>
 
+    <script type="text/x-template" id="my-template">
 
+            <div class="modal">
+                <a href="javascript://" @click="close">X</a>
+                <div id="modalCard" >
+                <h4>{{image.title}}</h4>
+                <img :src="image.url" alt="" width="400" height="400">
+                <p>{{image.description}}</p>
+                </div>
+                <form name="comment">
+                    <input v-model='commenter' type="text" name="commenter" placeholder="username">
+                    <button @click.prevent.default="submitComment">SUBMIT</button>
+                </form>
+                <textarea v-model='comment' name="comment" form="comment" rows="4" cols="28" placeholder="comment here"></textarea>
+                <div class="comment">
+                    {{comment}}
+                    {{commenter}}
+                </div>
+            </div>
+
+    </script>
+    <script src="js/components.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
 </body>
