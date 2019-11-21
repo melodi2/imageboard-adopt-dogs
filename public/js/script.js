@@ -11,21 +11,47 @@ new Vue({
         currentId: null
     },
     mounted: function() {
-        // console.log("my Vue component has mounted!");
-        // console.log("this is my images data: ", this.images);
         var me = this;
         axios
             .get("/images")
             .then(function(response) {
-                // console.log("response from /images", response.data);
-                // console.log("me.images: ", me.images);
                 me.images = response.data;
+                me.scroll();
             })
             .catch(function(err) {
                 console.log(err);
             });
     },
     methods: {
+        scroll: function() {
+            if (location.search.indexOf("scroll=infinite")) {
+                setTimeout(function() {
+                    console.log(
+                        "window.innerHeight + pageYOffset >= document.body.scrollHeight",
+                        window.innerHeight + pageYOffset >=
+                            document.body.scrollHeight
+                    );
+                    if (
+                        window.innerHeight + pageYOffset >=
+                        document.body.scrollHeight
+                    ) {
+                        console.log("infinite scrolling");
+                        var me = this;
+                        axios
+                            .get("/moreimages", {
+                                id: this.images[this.images.length - 1].id
+                            })
+                            .then(function(response) {
+                                console.log("inside axios get more images");
+                                me.images = response.data;
+                            })
+                            .catch(function(err) {
+                                console.log(err);
+                            });
+                    }
+                }, 1000);
+            }
+        },
         handleClick: function(e) {
             e.preventDefault();
             var fd = new FormData();

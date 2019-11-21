@@ -3,6 +3,7 @@ Vue.component("image-modal", {
     data: function() {
         return {
             image: {},
+            comments: [],
             comment: "",
             commenter: ""
         };
@@ -23,6 +24,13 @@ Vue.component("image-modal", {
             .catch(function(err) {
                 console.log("error in GET /singleImage", err);
             });
+        axios
+            .get(`/comments/${this.id}`)
+            .then(function(res) {
+                console.log("res.data", res.data);
+                me.comments = res.data;
+            })
+            .catch();
     },
     methods: {
         close: function() {
@@ -31,13 +39,16 @@ Vue.component("image-modal", {
         },
         submitComment: function() {
             console.log("submit Comment");
+            var he = this;
             axios
                 .post("/comments", {
                     comment: this.comment,
-                    commenter: this.commenter
+                    commenter: this.commenter,
+                    imageId: this.id
                 })
                 .then(function(res) {
                     // console.log("inside post comments");
+                    he.comments.unshift(res.data.comments);
                 });
         }
     }

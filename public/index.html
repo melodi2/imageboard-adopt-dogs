@@ -35,18 +35,20 @@
             <div class="modal">
                 <a href="javascript://" @click="close">X</a>
                 <div id="modalCard" >
-                <h4>{{image.title}}</h4>
-                <img :src="image.url" alt="" width="400" height="400">
-                <p>{{image.description}}</p>
-                </div>
-                <form name="comment">
-                    <input v-model='commenter' type="text" name="commenter" placeholder="username">
-                    <button @click.prevent.default="submitComment">SUBMIT</button>
-                </form>
-                <textarea v-model='comment' name="comment" form="comment" rows="4" cols="28" placeholder="comment here"></textarea>
-                <div class="comment">
-                    {{comment}}
-                    {{commenter}}
+                    <h4>{{image.title}}</h4>
+                    <img :src="image.url" alt="" width="400" height="400">
+                    <p>{{image.description}}</p>
+                    <p id="uploader">Uploaded by {{image.username}} at {{image.created_at}}</p>
+                    <form name="comment">
+                        <input v-model='commenter' type="text" name="commenter" placeholder="username">
+                        <button @click.prevent.default="submitComment">SUBMIT</button>
+                    </form>
+                    <textarea v-model='comment' name="comment" form="comment" rows="4" cols="28" placeholder="comment here"></textarea>
+                    <div  class="comment" v-for="comments in comments">
+                        {{comments.username}}
+                        {{comments.comment}}
+                        {{comments.created_at}}
+                    </div>
                 </div>
             </div>
 

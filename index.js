@@ -57,28 +57,54 @@ app.get("/images", (req, res) => {
             // console.log("rows.url", rows);
             res.json(rows);
         })
-        .catch();
+        .catch(err => {
+            console.log(err);
+        });
     //database query instead of this hardcoded
+});
+
+app.get("/moreimages", (req, res) => {
+    console.log("this is the current id", req.body.id);
+    db.getMoreImages(req.body.id)
+        .then(({ rows }) => {
+            // console.log("rows.url", rows);
+            res.json({
+                image: rows[0]
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 app.get("/singleImage/:imageId", (req, res) => {
     const { imageId } = req.params;
     console.log("req.params", req.params);
     db.getSingleImage(imageId).then(({ rows }) => {
-        db.getComments(imageId)
-            .then(comments => {
-                console.log("comments in get Comments", comments.rows[0]);
-                res.json({ image: rows[0], comments: comments.rows[0] });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        res.json({ image: rows[0] });
     });
+});
+
+app.get("/comments/:imageId", (req, res) => {
+    const { imageId } = req.params;
+    console.log("req.params", req.params);
+    db.getComments(imageId)
+        .then(({ rows }) => {
+            console.log("comments in get Comments", rows);
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 app.post("/comments", (req, res) => {
     console.log("req.body", req.body);
-    // db.addComment();
+    db.addComment(req.body.commenter, req.body.comment, req.body.imageId).then(
+        ({ rows }) => {
+            res.json({ comments: rows[0] });
+        }
+    );
 });
 
 app.listen(8080, () => console.log("Imageboard up and running..."));
