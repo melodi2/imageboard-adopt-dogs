@@ -63,14 +63,13 @@ app.get("/images", (req, res) => {
     //database query instead of this hardcoded
 });
 
-app.get("/moreimages", (req, res) => {
-    console.log("this is the current id", req.body.id);
-    db.getMoreImages(req.body.id)
-        .then(({ rows }) => {
-            // console.log("rows.url", rows);
-            res.json({
-                image: rows[0]
-            });
+app.get("/moreimages/:id", (req, res) => {
+    const { id } = req.params;
+    console.log("id", id);
+    db.getMoreImages(id)
+        .then(results => {
+            console.log("results", results);
+            res.json(results);
         })
         .catch(err => {
             console.log(err);

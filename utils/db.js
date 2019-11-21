@@ -36,11 +36,13 @@ module.exports.getComments = function getComments(imageId) {
 };
 
 module.exports.getMoreImages = function getMoreImages(imageId) {
-    db.query(
-        `SELECT * FROM images
+    return db
+        .query(
+            `SELECT * FROM images
         WHERE id < $1
         ORDER BY id DESC
         LIMIT 3`,
-        [imageId]
-    ).then(({ rows }) => rows);
+            [imageId]
+        )
+        .then(({ rows }) => rows);
 };

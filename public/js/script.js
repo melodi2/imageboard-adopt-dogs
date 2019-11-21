@@ -16,41 +16,52 @@ new Vue({
             .get("/images")
             .then(function(response) {
                 me.images = response.data;
-                me.scroll();
+                me.scroll(me.images);
             })
             .catch(function(err) {
                 console.log(err);
             });
     },
     methods: {
-        scroll: function() {
-            if (location.search.indexOf("scroll=infinite")) {
-                setTimeout(function() {
-                    console.log(
-                        "window.innerHeight + pageYOffset >= document.body.scrollHeight",
-                        window.innerHeight + pageYOffset >=
-                            document.body.scrollHeight
-                    );
-                    if (
-                        window.innerHeight + pageYOffset >=
+        scroll: function scroll(images) {
+            // var me = this;
+            console.log("first time calling scroll");
+            // if (location.search.indexOf("scroll=infinite")) {
+            setTimeout(function() {
+                console.log(
+                    "window.innerHeight + pageYOffset >= document.body.scrollHeight",
+                    window.innerHeight + pageYOffset >=
                         document.body.scrollHeight
-                    ) {
-                        console.log("infinite scrolling");
-                        var me = this;
-                        axios
-                            .get("/moreimages", {
-                                id: this.images[this.images.length - 1].id
-                            })
-                            .then(function(response) {
-                                console.log("inside axios get more images");
-                                me.images = response.data;
-                            })
-                            .catch(function(err) {
-                                console.log(err);
-                            });
-                    }
-                }, 1000);
-            }
+                );
+                if (
+                    window.innerHeight + pageYOffset >=
+                    document.body.scrollHeight
+                ) {
+                    console.log("infinite scrolling");
+                    console.log(
+                        "me.images[me.images.length - 1].id",
+                        images[images.length - 1].id
+                    );
+                    axios
+                        .get(`/moreimages/${images[images.length - 1].id}`)
+                        .then(function(response) {
+                            console.log(
+                                "inside axios get more images, response.data",
+                                response.data
+                            );
+                            response.data.forEach(element =>
+                                images.push(element)
+                            );
+                            scroll(images);
+                        })
+                        .catch(function(err) {
+                            console.log(err);
+                        });
+                } else {
+                    scroll(images);
+                }
+            }, 1000);
+            // }
         },
         handleClick: function(e) {
             e.preventDefault();
