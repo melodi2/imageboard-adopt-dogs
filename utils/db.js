@@ -30,7 +30,7 @@ module.exports.addComment = function addComment(username, comment, imageId) {
 
 module.exports.getComments = function getComments(imageId) {
     return db.query(
-        "SELECT created_at CONVERT(varchar, getdate(), 0), username, comment, image_id FROM comments WHERE image_id=$1 ORDER BY id DESC",
+        "SELECT * FROM comments WHERE image_id=$1 ORDER BY id DESC",
         [imageId]
     );
 };
@@ -45,4 +45,10 @@ module.exports.getMoreImages = function getMoreImages(imageId) {
             [imageId]
         )
         .then(({ rows }) => rows);
+};
+
+module.exports.deleteImage = function deleteImage(imageId) {
+    return db.query("DELETE FROM images where image_id=$1 returning id", [
+        imageId
+    ]);
 };

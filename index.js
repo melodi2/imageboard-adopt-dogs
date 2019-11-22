@@ -6,6 +6,7 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
+const moment = require("moment");
 
 const diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -63,6 +64,14 @@ app.get("/images", (req, res) => {
     //database query instead of this hardcoded
 });
 
+app.post("/images/:imageId", (req, res) => {
+    const { imageId } = req.params;
+    db.deleteImage(imageId).then(({ rows }) => {
+        console.log("rows in deleteImage index.js", rows);
+        res.json(rows);
+    });
+});
+
 app.get("/moreimages/:id", (req, res) => {
     const { id } = req.params;
     console.log("id", id);
@@ -79,9 +88,17 @@ app.get("/moreimages/:id", (req, res) => {
 app.get("/singleImage/:imageId", (req, res) => {
     const { imageId } = req.params;
     console.log("req.params", req.params);
-    db.getSingleImage(imageId).then(({ rows }) => {
-        res.json({ image: rows[0] });
-    });
+    db.getSingleImage(imageId)
+        .then(({ rows }) => {
+            rows[0].created_at = moment(rows[0].created_at)
+                .add(1, "day")
+                .format("LLL");
+            res.json({ image: rows[0] });
+        })
+        .catch(err => {
+            console.log("singleImage get route error", err);
+            res.json({ image: false });
+        });
 });
 
 app.get("/comments/:imageId", (req, res) => {
@@ -90,6 +107,11 @@ app.get("/comments/:imageId", (req, res) => {
     db.getComments(imageId)
         .then(({ rows }) => {
             console.log("comments in get Comments", rows);
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].created_at = moment(rows[i].created_at)
+                    .add(1, "day")
+                    .format("LLL");
+            }
             res.json(rows);
         })
         .catch(err => {
@@ -101,7 +123,12 @@ app.post("/comments", (req, res) => {
     console.log("req.body", req.body);
     db.addComment(req.body.commenter, req.body.comment, req.body.imageId).then(
         ({ rows }) => {
-            res.json({ comments: rows[0] });
+            rows[0].created_at = moment(rows[0].created_at)
+                .add(1, "day")
+                .format("LLL");
+            res.json({
+                comments: rows[0]
+            });
         }
     );
 });

@@ -8,7 +8,7 @@ new Vue({
         description: "",
         username: "",
         file: null,
-        currentId: null
+        currentId: location.hash.slice(1)
     },
     mounted: function() {
         var me = this;
@@ -21,34 +21,38 @@ new Vue({
             .catch(function(err) {
                 console.log(err);
             });
+
+        window.addEventListener("hashchange", function() {
+            me.currentId = location.hash.slice(1);
+        });
     },
     methods: {
         scroll: function scroll(images) {
             // var me = this;
-            console.log("first time calling scroll");
+            // console.log("first time calling scroll");
             // if (location.search.indexOf("scroll=infinite")) {
             setTimeout(function() {
-                console.log(
-                    "window.innerHeight + pageYOffset >= document.body.scrollHeight",
-                    window.innerHeight + pageYOffset >=
-                        document.body.scrollHeight
-                );
+                // console.log(
+                //     "window.innerHeight + pageYOffset >= document.body.scrollHeight",
+                //     window.innerHeight + pageYOffset >=
+                //         document.body.scrollHeight
+                // );
                 if (
                     window.innerHeight + pageYOffset >=
                     document.body.scrollHeight
                 ) {
-                    console.log("infinite scrolling");
-                    console.log(
-                        "me.images[me.images.length - 1].id",
-                        images[images.length - 1].id
-                    );
+                    // console.log("infinite scrolling");
+                    // console.log(
+                    //     "me.images[me.images.length - 1].id",
+                    //     images[images.length - 1].id
+                    // );
                     axios
                         .get(`/moreimages/${images[images.length - 1].id}`)
                         .then(function(response) {
-                            console.log(
-                                "inside axios get more images, response.data",
-                                response.data
-                            );
+                            // console.log(
+                            //     "inside axios get more images, response.data",
+                            //     response.data
+                            // );
                             response.data.forEach(element =>
                                 images.push(element)
                             );
@@ -91,7 +95,22 @@ new Vue({
             this.currentId = id;
         },
         unsetCurrentImage: function() {
-            this.currentId = null;
+            location.hash = "";
+        },
+        deleteImage: function() {
+            var me = this;
+            axios.post(`images/${this.currentId}`).then(() => {
+                console.log("deleted the image and the comments");
+                axios
+                    .get("/images")
+                    .then(function(response) {
+                        me.images = response.data;
+                        me.scroll(me.images);
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            });
         }
     }
 });

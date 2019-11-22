@@ -17,11 +17,12 @@
             <button @click.prevent.default="handleClick">SUBMIT</button>
         </form>
 
-        <div class="container" @>
-            <div class="cards" v-for="image in images" @click="show(image.id)">
+        <div class="container" @click="unsetCurrentImage">
+            <div class="cards" v-for="image in images">
             <h4>{{image.title}}</h4>
-            <img :src="image.url" alt="" width="200" height="200">
+            <a :href="'#'+image.id"><img :src="image.url" alt="" width="200" height="200"></a>
             <p>{{image.description}}</p>
+            <a href="javascript://" @click="deleteImage">Delete Image</a>
             </div>
         </div>
 
@@ -53,7 +54,7 @@
             </div>
 
     </script>
-    <script src="js/components.js"></script>
+    <script src="/js/components.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
 </body>
