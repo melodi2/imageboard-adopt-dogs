@@ -64,20 +64,19 @@ app.get("/images", (req, res) => {
     //database query instead of this hardcoded
 });
 
-app.post("/images/:imageId", (req, res) => {
-    const { imageId } = req.params;
-    db.deleteImage(imageId).then(({ rows }) => {
-        console.log("rows in deleteImage index.js", rows);
-        res.json(rows);
+app.post("/deleteimage/:id", (req, res) => {
+    console.log("in the deleteimage route");
+    const { id } = req.params;
+    db.deleteImage(id).then(({ rows }) => {
+        console.log("index.js deleted the image, rows", rows);
+        res.json(rows[0]);
     });
 });
 
-app.get("/moreimages/:id", (req, res) => {
+app.post("/moreimages/:id", (req, res) => {
     const { id } = req.params;
-    console.log("id", id);
     db.getMoreImages(id)
         .then(results => {
-            console.log("results", results);
             res.json(results);
         })
         .catch(err => {

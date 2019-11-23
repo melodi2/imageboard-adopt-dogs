@@ -48,7 +48,5 @@ module.exports.getMoreImages = function getMoreImages(imageId) {
 };
 
 module.exports.deleteImage = function deleteImage(imageId) {
-    return db.query("DELETE FROM images where image_id=$1 returning id", [
-        imageId
-    ]);
+    return db.query("DELETE FROM images where id=$1 returning id", [imageId]);
 };

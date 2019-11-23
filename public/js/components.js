@@ -19,7 +19,7 @@ Vue.component("image-modal", {
                     "single image GET route is  working, res.data.image",
                     res.data.image
                 );
-                if (res.data.image) {
+                if (res.data.image && res.data.image != {}) {
                     me.image = res.data.image;
                 } else {
                     console.log("no such an image");
@@ -46,11 +46,12 @@ Vue.component("image-modal", {
             axios
                 .get(`/singleImage/${this.id}`)
                 .then(function(res) {
-                    // console.log(
-                    //     "single image GET route is  working, res.data.image",
-                    //     res.data.image
-                    // );
-                    me.image = res.data.image;
+                    if (res.data.image && res.data.image != {}) {
+                        me.image = res.data.image;
+                    } else {
+                        console.log("no such an image, watch");
+                        me.close();
+                    }
                 })
                 .catch(function(err) {
                     console.log("error in GET /singleImage", err);

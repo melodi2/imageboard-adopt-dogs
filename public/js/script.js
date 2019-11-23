@@ -97,19 +97,34 @@ new Vue({
         unsetCurrentImage: function() {
             location.hash = "";
         },
-        deleteImage: function() {
+        deleteImagefromArray: function(id) {
+            for (var i = 0; i < this.images.length; i++) {
+                if (this.images[i].id == id) {
+                    console.log(
+                        "deleteImagefromArray is running, object i in images",
+                        this.images[i]
+                    );
+                    var index = this.images.indexOf(this.images[i]);
+                    console.log("index inside loop", index);
+                    if (index > -1) {
+                        this.images.splice(index, 1);
+                    }
+                }
+            }
+            console.log("before splice index", index);
+            console.log("after splice index", index);
+        },
+        deleteImage: function(id) {
+            console.log("deleteImage vue");
             var me = this;
-            axios.post(`images/${this.currentId}`).then(() => {
-                console.log("deleted the image and the comments");
-                axios
-                    .get("/images")
-                    .then(function(response) {
-                        me.images = response.data;
-                        me.scroll(me.images);
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
+            this.deleteImagefromArray(id);
+            axios.post(`deleteimage/${id}`).then(function(res) {
+                console.log(
+                    "deleted the image and the comments, res.data",
+                    res.data.id
+                );
+                console.log("BEFORE me.images", me.images);
+                console.log("AFTER me.images", me.images);
             });
         }
     }

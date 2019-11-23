@@ -22,7 +22,7 @@
             <h4>{{image.title}}</h4>
             <a :href="'#'+image.id"><img :src="image.url" alt="" width="200" height="200"></a>
             <p>{{image.description}}</p>
-            <a href="javascript://" @click="deleteImage">Delete Image</a>
+            <button @click.prevent.default="deleteImage(image.id)">Delete Image</button>
             </div>
         </div>
 
