@@ -24,6 +24,10 @@ form {
     margin: 20px;
     text-align: left;
 }
+.description {
+    width: 500px;
+}
+
 button {
     font-size: 20px;
     cursor: pointer;
@@ -54,13 +58,14 @@ a {
 
 .cards {
     background-color: #f2eee5;
+    font-size: 20px;
+    font-family: sans-serif;
     border-radius: 10px;
-    font-size: 30px;
-    padding-bottom: 20px;
+    padding: 20px;
 }
 
 .modal {
-    background-color: #f6ad7b;
+    background-color: #be7575;
     border-radius: 10px;
     text-align: center;
     color: black;
@@ -78,6 +83,9 @@ a {
     justify-content: center;
     align-items: center;
 }
+.xclose {
+    text-align: right;
+}
 
 .modal form {
     font-size: 20px;
@@ -85,17 +93,28 @@ a {
 .modal textarea {
     font-size: 20px;
 }
+div .comment {
+    background-color: #f6ad7b8f;
+    border-radius: 10px;
+    text-align: left;
+    padding: 5px 10px;
+    margin: 10px;
+}
 
 #modalCard {
-    background-color: f9ffea;
+    background-color: #f9ffea;
+    font-size: 20px;
+    font-family: sans-serif;
     opacity: 1;
     width: 80%;
     height: auto;
     overflow: scroll;
+    padding: 20px;
 }
 
 #uploader {
     font-size: 20px;
+    font-style: italic;
 }
 
 .inputfile {
