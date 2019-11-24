@@ -41,11 +41,11 @@ new Vue({
                     window.innerHeight + pageYOffset >=
                     document.body.scrollHeight
                 ) {
-                    // console.log("infinite scrolling");
-                    // console.log(
-                    //     "me.images[me.images.length - 1].id",
-                    //     images[images.length - 1].id
-                    // );
+                    console.log("infinite scrolling");
+                    console.log(
+                        "me.images[me.images.length - 1].id",
+                        images[images.length - 1].id
+                    );
                     axios
                         .get(`/moreimages/${images[images.length - 1].id}`)
                         .then(function(response) {
@@ -59,7 +59,7 @@ new Vue({
                             scroll(images);
                         })
                         .catch(function(err) {
-                            console.log(err);
+                            console.log("err in moreimages get axios", err);
                         });
                 } else {
                     scroll(images);

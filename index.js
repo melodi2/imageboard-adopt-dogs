@@ -71,7 +71,7 @@ app.post("/deleteimage/:id", (req, res) => {
     });
 });
 
-app.post("/moreimages/:id", (req, res) => {
+app.get("/moreimages/:id", (req, res) => {
     const { id } = req.params;
     db.getMoreImages(id)
         .then(results => {
