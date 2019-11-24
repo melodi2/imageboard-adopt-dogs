@@ -86,9 +86,12 @@ new Vue({
                 });
         },
         handleChange: function(e) {
-            // console.log("e.target.files[0]", e.target.files[0]);
-            // console.log("handle change is happening");
             this.file = e.target.files[0];
+            var label = document.querySelectorAll(".labelforInput");
+
+            label[0].innerText = e.target.files[0].name;
+
+            console.log("after label.innerText", label[0].innerText);
         },
         show: function(id) {
             console.log("image id ", id);

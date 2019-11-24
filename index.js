@@ -34,7 +34,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const imageUrl = `${s3Url}${req.file.filename}`;
     db.addImage(title, description, username, imageUrl)
         .then(({ rows }) => {
-            console.log("rows", rows[0]);
+            // console.log("rows", rows[0]);
             res.json({
                 image: rows[0]
             });
@@ -42,9 +42,9 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         .catch(err => {
             console.log(err);
         });
-    console.log("this is the upload route!!");
-    console.log("input: ", req.body);
-    console.log("req.file: ", req.file);
+    // console.log("this is the upload route!!");
+    // console.log("input: ", req.body);
+    // console.log("req.file: ", req.file);
     // if (req.file) {
     //     res.json({ success: true });
     // } else {
@@ -65,10 +65,8 @@ app.get("/images", (req, res) => {
 });
 
 app.post("/deleteimage/:id", (req, res) => {
-    console.log("in the deleteimage route");
     const { id } = req.params;
     db.deleteImage(id).then(({ rows }) => {
-        console.log("index.js deleted the image, rows", rows);
         res.json(rows[0]);
     });
 });
@@ -86,7 +84,6 @@ app.post("/moreimages/:id", (req, res) => {
 
 app.get("/singleImage/:imageId", (req, res) => {
     const { imageId } = req.params;
-    console.log("req.params", req.params);
     db.getSingleImage(imageId)
         .then(({ rows }) => {
             rows[0].created_at = moment(rows[0].created_at)
@@ -102,10 +99,8 @@ app.get("/singleImage/:imageId", (req, res) => {
 
 app.get("/comments/:imageId", (req, res) => {
     const { imageId } = req.params;
-    console.log("req.params", req.params);
     db.getComments(imageId)
         .then(({ rows }) => {
-            console.log("comments in get Comments", rows);
             for (var i = 0; i < rows.length; i++) {
                 rows[i].created_at = moment(rows[i].created_at)
                     .add(1, "day")
@@ -119,7 +114,7 @@ app.get("/comments/:imageId", (req, res) => {
 });
 
 app.post("/comments", (req, res) => {
-    console.log("req.body", req.body);
+    // console.log("req.body", req.body);
     db.addComment(req.body.commenter, req.body.comment, req.body.imageId).then(
         ({ rows }) => {
             rows[0].created_at = moment(rows[0].created_at)

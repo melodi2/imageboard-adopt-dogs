@@ -1,25 +1,67 @@
 body {
-    background-color: lavender;
+    background-color: #f6ad7b;
     text-align: center;
+    font-family: "Kalam", cursive;
+}
+/* font-family: 'Kalam', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Patrick Hand', cursive;
+font-family: 'Jaldi', sans-serif;
+font-family: 'Amaranth', sans-serif; */
+header {
+    font-size: 40px;
+}
+.headertitle {
+    padding: 10px;
+    border: 2px black solid;
 }
 img {
     object-fit: cover;
     object-position: top;
 }
 
+form {
+    margin: 20px;
+    text-align: left;
+}
+button {
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #f1e5e6;
+    background-color: #d3394c;
+}
+
+button:hover {
+    background-color: #722040;
+}
+
+form input {
+    font-size: 20px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
 .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: auto;
-    grid-gap: 20px;
+    grid-gap: 50px;
 }
 
 .cards {
-    border: 5px black;
+    background-color: #f2eee5;
+    border-radius: 10px;
+    font-size: 30px;
+    padding-bottom: 20px;
 }
 
 .modal {
-    background-color: #007cfccf;
+    background-color: #f6ad7b;
+    border-radius: 10px;
     text-align: center;
     color: black;
     font-size: 30px;
@@ -45,7 +87,7 @@ img {
 }
 
 #modalCard {
-    background-color: white;
+    background-color: f9ffea;
     opacity: 1;
     width: 80%;
     height: auto;
@@ -53,5 +95,67 @@ img {
 }
 
 #uploader {
-    font-size: 10px;
+    font-size: 20px;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+/* .no-js .inputfile + label {
+    display: none;
+} */
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+/* style 1 */
+
+.inputfile + label {
+    color: #f1e5e6;
+    background-color: #d3394c;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label,
+.inputfile + label:hover {
+    background-color: #722040;
 }

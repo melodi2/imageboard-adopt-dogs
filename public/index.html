@@ -3,18 +3,65 @@
 <head>
     <title>Imageboard</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Amaranth:400,700|Gloria+Hallelujah|Jaldi|Kalam:700|Patrick+Hand&display=swap" rel="stylesheet">
     <script src="/js/vue.js"></script>
 </head>
 <body>
-    <h1>Imageboard</h1>
-    <h2>Latest Images</h2>
+    <header>
+        <p class="headertitle">ADOPT A DOG <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="61.589px" height="61.589px" viewBox="0 0 61.589 61.589" style="enable-background:new 0 0 61.589 61.589;" xml:space="preserve">
+<g>
+	<g>
+		<path d="M41.287,7.067C31.857-2.356,16.51-2.356,7.08,7.072c-9.441,9.439-9.439,24.779,0,34.219    c8.839,8.834,22.827,9.276,32.327,1.535l3.929,3.925l-1.144,1.144l13.696,13.695l5.7-5.7L47.893,42.191l-1.136,1.139l-3.937-3.935    C50.571,29.903,50.143,15.922,41.287,7.067z M40.281,37.458l-2.824,2.824c-8.228,6.772-20.404,6.414-28.091-1.272    c-8.178-8.173-8.18-21.483,0-29.652c8.171-8.173,21.474-8.173,29.642-0.004C46.7,17.044,47.059,29.221,40.281,37.458z"/>
+		<g>
+			<path d="M24.035,21.58c-3.574,0-9.973,5.21-9.973,11.64c0,6.431,4.462,1.673,9.973,1.673c5.509,0,9.971,4.758,9.971-1.673     C34.006,26.79,27.612,21.582,24.035,21.58z"/>
+			<path d="M32.393,15.829c-0.691,2.578-2.762,4.261-4.624,3.762c-1.861-0.497-2.811-2.993-2.122-5.568     c0.689-2.58,2.76-4.261,4.624-3.764C32.131,10.758,33.082,13.251,32.393,15.829z M22.425,14.027     c0.689,2.578-0.258,5.071-2.121,5.568c-1.861,0.498-3.931-1.186-4.622-3.764c-0.689-2.575,0.26-5.068,2.122-5.568     C19.665,9.766,21.734,11.449,22.425,14.027z M10.208,18.297c1.478-0.853,3.634,0.114,4.813,2.16     c1.182,2.044,0.94,4.396-0.536,5.249c-1.478,0.854-3.636-0.114-4.815-2.158C8.488,21.502,8.729,19.152,10.208,18.297z      M33.059,20.459c1.182-2.044,3.335-3.013,4.813-2.158c1.477,0.854,1.716,3.205,0.534,5.249c-1.18,2.044-3.337,3.013-4.813,2.158     C32.113,24.853,31.873,22.503,33.059,20.459z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></p>
+        <p>New Uploads</p>
+    </header>
     <div id="main">
         <form>
             <input v-model="title" type="text" name="title" placeholder="title">
             <input v-model="description" type="text" name="description" placeholder="description">
             <input v-model='username' type="text" name="username" placeholder="username">
-            <input @change="handleChange" type="file" name="file" accept='image/*'>
-            <button @click.prevent.default="handleClick">SUBMIT</button>
+            <!-- <input @change="handleChange" type="file" name="file" accept='image/*'> -->
+            <p>
+                <input @change="handleChange" type="file" name="file" id="file" class="inputfile" accept='image/*'/>
+                <label class="labelforInput" for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>Choose a file</label>
+            </p>
+            <p><button @click.prevent.default="handleClick">Upload</button></p>
         </form>
 
         <div class="container" @click="unsetCurrentImage">
@@ -22,7 +69,7 @@
             <h4>{{image.title}}</h4>
             <a :href="'#'+image.id"><img :src="image.url" alt="" width="200" height="200"></a>
             <p>{{image.description}}</p>
-            <button @click.prevent.default="deleteImage(image.id)">Delete Image</button>
+            <button @click.prevent.default="deleteImage(image.id)">Delete</button>
             </div>
         </div>
 
@@ -30,25 +77,30 @@
         <image-modal  v-if="currentId" :id="currentId" @close="unsetCurrentImage"></image-modal>
 
     </div>
-
+    <footer>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    </footer>
     <script type="text/x-template" id="my-template">
 
             <div class="modal">
                 <a href="javascript://" @click="close">X</a>
-                <div id="modalCard" >
+                <div id="modalCard">
                     <h4>{{image.title}}</h4>
                     <img :src="image.url" alt="" width="400" height="400">
                     <p>{{image.description}}</p>
-                    <p id="uploader">Uploaded by {{image.username}} at {{image.created_at}}</p>
+                    <p id="uploader">Uploaded by {{image.username}} on {{image.created_at}}</p>
+
                     <form name="comment">
-                        <input v-model='commenter' type="text" name="commenter" placeholder="username">
-                        <button @click.prevent.default="submitComment">SUBMIT</button>
+                        <p><input v-model='commenter' type="text" name="commenter" placeholder="username"></p>
+
+                        <p><textarea v-model='comment' name="comment" form="comment" rows="4" cols="28" placeholder="comment here"></textarea></p>
+
+                        <p><button @click.prevent.default="submitComment">SUBMIT</button></p>
                     </form>
-                    <textarea v-model='comment' name="comment" form="comment" rows="4" cols="28" placeholder="comment here"></textarea>
+
                     <div  class="comment" v-for="comments in comments">
-                        {{comments.username}}
-                        {{comments.comment}}
-                        {{comments.created_at}}
+                        <p>{{comments.comment}}</p>
+                        <p id="uploader">{{comments.username}} on {{comments.created_at}}</p>
                     </div>
                 </div>
             </div>
