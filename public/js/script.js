@@ -119,15 +119,15 @@ new Vue({
         },
         deleteImage: function(id) {
             console.log("deleteImage vue");
-            var me = this;
+            // var me = this;
             this.deleteImagefromArray(id);
             axios.post(`deleteimage/${id}`).then(function(res) {
-                console.log(
-                    "deleted the image and the comments, res.data",
-                    res.data.id
-                );
-                console.log("BEFORE me.images", me.images);
-                console.log("AFTER me.images", me.images);
+                // console.log(
+                //     "deleted the image and the comments, res.data",
+                //     res.data.id
+                // );
+                // console.log("BEFORE me.images", me.images);
+                // console.log("AFTER me.images", me.images);
             });
         }
     }
