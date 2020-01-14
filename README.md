@@ -19,12 +19,21 @@ This "Adopt a dog" Imageboard is a Vue.js-based single page application where us
 ## Preview
 
 Here is an overview of the website with the uploader.
+
 <img src="/public/img/overview.png"/>
+
 With the uploader, the user can enter a username, description and select the image of the dog to upload.
+
 <img src="/public/img/upload.gif"/>
+
 The application loads more images on scroll (infinite scroll)
+
 <img src="/public/img/infiniteScroll.gif"/>
+
 Users can click on the images of the dogs and comment under the picture.
+
 <img src="/public/img/comment.gif"/>
+
 Once the dog has found a new home, the user can simply delete the dog together with the comments under the picture.
+
 <img src="/public/img/closeDelete.gif"/>
