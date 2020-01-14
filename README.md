@@ -18,8 +18,8 @@ This imageboard ("Adopt a dog") is a Vue.js-based single page application, where
 
 ## Preview
 
-<img src="./overview.png"/>
-<img src="./upload.gif"/>
-<img src="./infiniteScroll.gif"/>
-<img src="./comment.gif"/>
-<img src="./closeDelete.gif"/>
+<img src="/public/img/overview.png"/>
+<img src="/public/img/upload.gif"/>
+<img src="/public/img/infiniteScroll.gif"/>
+<img src="/public/img/comment.gif"/>
+<img src="/public/img/closeDelete.gif"/>
